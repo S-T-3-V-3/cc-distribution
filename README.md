@@ -4,7 +4,7 @@ Routes planning, architecture, and review work through configurable AI CLIs and 
 
 ## What this plugin does
 
-- Adds slash commands for explicit provider calls: `/cc-architect:plan`, `/cc-architect:architecture`, `/cc-architect:review`.
+- Adds slash commands for explicit provider calls: `/cc-distribution:plan`, `/cc-distribution:architecture`, `/cc-distribution:review`.
 - Adds a `UserPromptSubmit` hook that can implicitly route prompts to a provider.
 - Stores routing settings in `.claude/settings.json` under `aiArchitect`.
 
@@ -19,7 +19,7 @@ claude --plugin-dir /home/codex/claude-marketplace/ai-architect
 Run:
 
 ```
-/cc-architect:setup
+/cc-distribution:setup
 ```
 
 This creates or updates `.claude/settings.json` with defaults and prints a summary.
@@ -86,13 +86,13 @@ When `implicit` is `true`, the plugin uses a `UserPromptSubmit` hook to detect c
 
 ## Slash commands
 
-- `/cc-architect:setup` - initialize routing settings
-- `/cc-architect:targets` - show current routing summary
-- `/cc-architect:target [planning|architecture|review] [codex|gemini|claude|off]` - update a category target
-- `/cc-architect:implicit [on|off]` - toggle implicit routing
-- `/cc-architect:plan` - explicit planning guidance via configured provider
-- `/cc-architect:architecture` - explicit architecture guidance via configured provider
-- `/cc-architect:review` - explicit review guidance via configured provider
+- `/cc-distribution:setup` - initialize routing settings
+- `/cc-distribution:targets` - show current routing summary
+- `/cc-distribution:target [planning|architecture|review] [codex|gemini|claude|off]` - update a category target
+- `/cc-distribution:implicit [on|off]` - toggle implicit routing
+- `/cc-distribution:plan` - explicit planning guidance via configured provider
+- `/cc-distribution:architecture` - explicit architecture guidance via configured provider
+- `/cc-distribution:review` - explicit review guidance via configured provider
 
 ## Notes
 
