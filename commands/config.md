@@ -9,9 +9,11 @@ description: Configure roles and providers
 4. Settings
 ==========
 
-Run:
-- `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/ai_cli.py menu main`
-- `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/ai_cli.py menu help`
-- `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/ai_cli.py menu roles`
-- `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/ai_cli.py menu providers`
-- `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/ai_cli.py menu settings`
+Next:
+- Read `menu/main.md` for the numbered menu.
+- Read `menu/help.md`, `menu/roles.md`, `menu/providers.md`, `menu/settings.md` for each submenu.
+-
+- If you want live role/provider lists, run the CLI helpers in your terminal:
+  - `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/ai_cli.py menu main`
+  - `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/ai_cli.py menu roles`
+  - `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/ai_cli.py menu providers`

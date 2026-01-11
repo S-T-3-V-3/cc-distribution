@@ -22,7 +22,7 @@ Run:
 /cc-distribution:config
 ```
 
-Then run a menu command, for example:
+If you want live role/provider lists, run a menu command in your terminal, for example:
 
 ```
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/ai_cli.py menu roles

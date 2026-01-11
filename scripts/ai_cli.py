@@ -167,7 +167,7 @@ def _print_roles_list(config: dict) -> None:
         provider = role_cfg.get("provider", "claude")
         desc = role_cfg.get("description", "")
         suffix = f" - {desc}" if desc else ""
-        print(f\"{idx}. {role} [{enabled}] ({provider}){suffix}\")
+        print(f"{idx}. {role} [{enabled}] ({provider}){suffix}")
 
 
 def _print_providers_list(config: dict) -> None:
@@ -181,11 +181,11 @@ def _print_providers_list(config: dict) -> None:
         command = provider.get("command")
         extras = []
         if model:
-            extras.append(f\"model={model}\")
+        extras.append(f"model={model}")
         if command:
-            extras.append(f\"command={command}\")
-        extra_text = f\"; {', '.join(extras)}\" if extras else \"\"
-        print(f\"{idx}. {name} ({kind}{extra_text})\")
+        extras.append(f"command={command}")
+        extra_text = f"; {', '.join(extras)}" if extras else ""
+        print(f"{idx}. {name} ({kind}{extra_text})")
 
 
 
