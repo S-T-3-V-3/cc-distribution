@@ -1,5 +1,6 @@
 == Settings ==
-1. Statusline is enabled by default.
-2. To disable, remove `statusLine` from `.claude/settings.json`.
-3. Future settings will appear here.
+1. Statusline is optional and per-project.
+2. Enable: `node "${CLAUDE_PLUGIN_ROOT}/scripts/statusline_toggle.js" enable`
+3. Disable: `node "${CLAUDE_PLUGIN_ROOT}/scripts/statusline_toggle.js" disable`
+4. Future settings will appear here.
 ==========

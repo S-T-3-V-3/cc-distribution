@@ -6,7 +6,7 @@ Configure AI roles and providers for Claude Code.
 
 - Stores role and provider settings in `.claude/settings.json` under `aiArchitect`.
 - Provides a single configuration command that shows a fast menu.
-- Statusline is enabled by default and shows enabled roles/providers.
+- Statusline is optional and shows enabled roles/providers when enabled.
 
 ## Install for local testing
 
@@ -22,7 +22,9 @@ Run:
 /cc-distribution:config
 ```
 
-Then read the menu files:
+The command runs an interactive menu. It can also be used for first-time setup.
+
+Menu files:
 
 - `menu/main.md`
 - `menu/help.md`
@@ -65,6 +67,11 @@ Each role can be enabled/disabled and assigned to a provider. Role names must be
 
 - `/cc-distribution:config` - show the fast menu
 
-## Disable statusline
+## Statusline toggle
 
-Remove the `statusLine` block from `.claude/settings.json` for this project.
+Enable or disable per project:
+
+```bash
+node "${CLAUDE_PLUGIN_ROOT}/scripts/statusline_toggle.js" enable
+node "${CLAUDE_PLUGIN_ROOT}/scripts/statusline_toggle.js" disable
+```
