@@ -1,47 +1,13 @@
 #!/usr/bin/env python3
 import argparse
-import json
-from pathlib import Path
 
 from ai_lib import load_config, project_root, save_config, summarize_config, validate_role_name
-
-PLUGIN_NAME = "cc-distribution"
 
 
 def _exit_with(message: str, code: int = 2) -> int:
     print(message)
     return code
 
-
-def _settings_path(root: Path) -> Path:
-    return root / ".claude" / "settings.json"
-
-
-def _load_settings(path: Path) -> dict:
-    if not path.exists():
-        return {}
-    try:
-        with path.open("r", encoding="utf-8") as handle:
-            return json.load(handle)
-    except json.JSONDecodeError:
-        return {}
-
-
-def _save_settings(path: Path, settings: dict) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8") as handle:
-        json.dump(settings, handle, indent=2, sort_keys=True)
-        handle.write("\n")
-
-
-def _statusline_command() -> str:
-    # Resolve the latest installed plugin path in cache and run statusline.py
-    return (
-        "bash -lc '"
-        "plugin_dir=$(ls -td ~/.claude/plugins/cache/" + PLUGIN_NAME + "/" + PLUGIN_NAME + "/*/ 2>/dev/null | head -1);"
-        "if [ -z \"$plugin_dir\" ]; then exit 0; fi;"
-        "python3 \"${plugin_dir}scripts/statusline.py\"'"
-    )
 
 
 def _require_role(config: dict, role: str) -> dict | None:
@@ -177,29 +143,6 @@ def _print_auth_help() -> None:
     print("- Vertex AI: export GOOGLE_API_KEY=... and GOOGLE_GENAI_USE_VERTEXAI=true")
 
 
-def _statusline_enable(root: Path) -> None:
-    settings_path = _settings_path(root)
-    settings = _load_settings(settings_path)
-    settings["statusLine"] = {
-        "type": "command",
-        "command": _statusline_command(),
-    }
-    _save_settings(settings_path, settings)
-    print("Statusline enabled.")
-
-
-def _statusline_disable(root: Path) -> None:
-    settings_path = _settings_path(root)
-    settings = _load_settings(settings_path)
-    if "statusLine" in settings:
-        settings.pop("statusLine")
-        _save_settings(settings_path, settings)
-    print("Statusline disabled.")
-
-
-def _statusline_show() -> None:
-    print(_statusline_command())
-
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Manage AI routing settings")
@@ -255,9 +198,6 @@ def parse_args() -> argparse.Namespace:
     provider_remove = provider_sub.add_parser("remove")
     provider_remove.add_argument("name")
 
-    statusline = sub.add_parser("statusline", help="Manage statusline")
-    statusline.add_argument("action", choices=("enable", "disable", "show"))
-
     return parser.parse_args()
 
 
@@ -272,15 +212,6 @@ def main() -> int:
 
     if args.command == "auth-help":
         _print_auth_help()
-        return 0
-
-    if args.command == "statusline":
-        if args.action == "enable":
-            _statusline_enable(root)
-        elif args.action == "disable":
-            _statusline_disable(root)
-        elif args.action == "show":
-            _statusline_show()
         return 0
 
     if args.command == "role":

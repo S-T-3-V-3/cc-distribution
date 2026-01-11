@@ -27,8 +27,3 @@ description: Configure roles and providers
 
 - Auth help:
   - !`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/ai_cli.py auth-help`
-
-- Statusline (shows enabled roles in prompt):
-  - !`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/ai_cli.py statusline enable`
-  - !`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/ai_cli.py statusline disable`
-  - !`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/ai_cli.py statusline show`
