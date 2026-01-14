@@ -38,13 +38,22 @@ const settings = readSettings();
 const ourCommand = buildOurCommand();
 // Robust regex to find our command block: bash -lc '... # MARKER'
 const markerRegex = new RegExp(`bash\\s+-lc\\s+'[^']*#\\s*${MARKER}[^']*'`, 'g');
+// Extemely aggressive legacy regex: matches anything that looks like our old persistence logic
+const aggressiveLegacyRegex = /bash\s+-lc\s+'[^']*ls\s+-td[^']*cc-distribution[^']*'/g;
+// Fallback legacy regex for basic script calls
+const basicLegacyRegex = /bash\s+-lc\s+'[^']*scripts\/statusline\/statusline\.js[^']*'/g;
 
 if (action === "disable") {
   if (settings.statusLine && settings.statusLine.command) {
     const currentCommand = settings.statusLine.command;
-    if (currentCommand.includes(MARKER)) {
+    const hasMarker = markerRegex.test(currentCommand);
+    const hasAggressive = aggressiveLegacyRegex.test(currentCommand);
+    const hasBasic = basicLegacyRegex.test(currentCommand);
+
+    if (hasMarker || hasAggressive || hasBasic) {
       // Remove our command and any surrounding separators
-      const removeRegex = new RegExp(`\\s*(?:;|&&)?\\s*bash\\s+-lc\\s+'[^']*#\\s*${MARKER}[^']*'\\s*(?:;|&&)?`, 'g');
+      // We use a combined regex for replacement
+      const removeRegex = /bash\s+-lc\s+'[^']*(?:#\s*ai-architect-statusline|ls\s+-td[^']*cc-distribution|scripts\/statusline\/statusline\.js)[^']*'/g;
       let newCommand = currentCommand.replace(removeRegex, ' ; ').trim();
 
       // Clean up multiple separators or leading/trailing separators
@@ -77,6 +86,12 @@ if (!settings.statusLine) {
   if (markerRegex.test(currentCommand)) {
     // Replace existing version
     settings.statusLine.command = currentCommand.replace(markerRegex, ourCommand);
+  } else if (aggressiveLegacyRegex.test(currentCommand)) {
+    // Replace aggressive legacy version
+    settings.statusLine.command = currentCommand.replace(aggressiveLegacyRegex, ourCommand);
+  } else if (basicLegacyRegex.test(currentCommand)) {
+    // Replace basic legacy version
+    settings.statusLine.command = currentCommand.replace(basicLegacyRegex, ourCommand);
   } else {
     // Append our command
     settings.statusLine.command = currentCommand ? `${currentCommand} ; ${ourCommand}` : ourCommand;
