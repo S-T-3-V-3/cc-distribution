@@ -39,7 +39,7 @@ const ourCommand = buildOurCommand();
 // Robust regex to find our command block: bash -lc '... # MARKER'
 const markerRegex = new RegExp(`bash\\s+-lc\\s+'[^']*#\\s*${MARKER}[^']*'`, 'g');
 // Extemely aggressive legacy regex: matches anything that looks like our old persistence logic
-const aggressiveLegacyRegex = /bash\s+-lc\s+'[^']*ls\s+-td[^']*cc-distribution[^']*'/g;
+const aggressiveLegacyRegex = /bash\s+-lc\s+'[^']*ls\s+-td[^']*agent-dispatcher[^']*'/g;
 // Fallback legacy regex for basic script calls
 const basicLegacyRegex = /bash\s+-lc\s+'[^']*scripts\/statusline\/statusline\.js[^']*'/g;
 
@@ -53,7 +53,7 @@ if (action === "disable") {
     if (hasMarker || hasAggressive || hasBasic) {
       // Remove our command and any surrounding separators
       // We use a combined regex for replacement
-      const removeRegex = /bash\s+-lc\s+'[^']*(?:#\s*agent-dispatcher-statusline|ls\s+-td[^']*cc-distribution|scripts\/statusline\/statusline\.js)[^']*'/g;
+      const removeRegex = /bash\s+-lc\s+'[^']*(?:#\s*agent-dispatcher-statusline|ls\s+-td[^']*agent-dispatcher|scripts\/statusline\/statusline\.js)[^']*'/g;
       let newCommand = currentCommand.replace(removeRegex, ' ; ').trim();
 
       // Clean up multiple separators or leading/trailing separators
